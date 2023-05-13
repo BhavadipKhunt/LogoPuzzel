@@ -7,15 +7,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class logo_play_activity extends AppCompatActivity implements View.OnClickListener {
     ImageView imageView;
     String image,level;
     Button hint,cancel,clear;
     Button[] btn=new Button[14];
+    LinearLayout layout;
+
+    ArrayList<Character>ansarr=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +30,7 @@ public class logo_play_activity extends AppCompatActivity implements View.OnClic
         image=getIntent().getStringExtra("image");
         imageView=findViewById(R.id.play_image_view);
         level=getIntent().getStringExtra("level");
+        layout=findViewById(R.id.liner_layout);
         for (int i=0;i<btn.length;i++)
         {
             int id = getResources().getIdentifier("btn"+i,"id",getPackageName());
@@ -56,6 +64,28 @@ public class logo_play_activity extends AppCompatActivity implements View.OnClic
         }
         Drawable drawable= Drawable.createFromStream(stream,null);
         imageView.setImageDrawable(drawable);
+        String str[]=image.split("\\.");
+        char ch[]=str[0].toCharArray();
+        for (int i=0;i<ch.length;i++)
+        {
+            ansarr.add(ch[i]);
+
+        }
+        for (int i=ch.length;i<btn.length;i++)
+        {
+            char c= (char) (new Random().nextInt(122-'a')+97);
+            ansarr.add(c);
+        }
+        System.out.println("before="+ansarr);
+        Collections.shuffle(ansarr);
+        System.out.println("after="+ansarr);
+        for (int i=0;i<btn.length;i++)
+        {
+            btn[i].setText(""+ansarr.get(i).toString());
+            System.out.println(""+ansarr.get(i));
+
+        }
+
     }
 
     @Override
