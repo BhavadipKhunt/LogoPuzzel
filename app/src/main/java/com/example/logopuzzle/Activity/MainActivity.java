@@ -1,4 +1,4 @@
-package com.example.logopuzzle;
+package com.example.logopuzzle.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.logopuzzle.R;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

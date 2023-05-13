@@ -1,4 +1,4 @@
-package com.example.logopuzzle;
+package com.example.logopuzzle.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.example.logopuzzle.R;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,4 +1,4 @@
-package com.example.logopuzzle;
+package com.example.logopuzzle.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.example.logopuzzle.R;
+import com.example.logopuzzle.Adapter.gride_adapter;
 
 import java.io.IOException;
 import java.util.ArrayList;

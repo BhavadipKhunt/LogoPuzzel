@@ -1,10 +1,13 @@
-package com.example.logopuzzle;
+package com.example.logopuzzle.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.example.logopuzzle.R;
+import com.example.logopuzzle.Adapter.recycler_adapter;
 
 public class level_show_activity extends AppCompatActivity {
     RecyclerView listView;

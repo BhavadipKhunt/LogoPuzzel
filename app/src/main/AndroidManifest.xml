@@ -13,16 +13,16 @@
         android:theme="@style/Theme.LogoPuzzle"
         tools:targetApi="31">
         <activity
-            android:name=".logo_play_activity"
+            android:name=".Activity.logo_play_activity"
             android:exported="false" />
         <activity
-            android:name=".logo_show_activity"
+            android:name=".Activity.logo_show_activity"
             android:exported="false" />
         <activity
-            android:name=".level_show_activity"
+            android:name=".Activity.level_show_activity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

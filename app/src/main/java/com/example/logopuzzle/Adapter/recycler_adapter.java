@@ -1,4 +1,4 @@
-package com.example.logopuzzle;
+package com.example.logopuzzle.Adapter;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,8 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.logopuzzle.Activity.level_show_activity;
+import com.example.logopuzzle.Activity.logo_show_activity;
+import com.example.logopuzzle.R;
+
 public class recycler_adapter  extends RecyclerView.Adapter<recycler_adapter.user_holder>{
-    level_show_activity level_show_activity;
+    com.example.logopuzzle.Activity.level_show_activity level_show_activity;
     String[] level;
 
     int item_Position;

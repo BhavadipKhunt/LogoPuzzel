@@ -1,4 +1,4 @@
-package com.example.logopuzzle;
+package com.example.logopuzzle.Adapter;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -10,12 +10,16 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.logopuzzle.Activity.logo_play_activity;
+import com.example.logopuzzle.Activity.logo_show_activity;
+import com.example.logopuzzle.R;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 public class gride_adapter extends RecyclerView.Adapter<gride_adapter.user_holder>{
-    logo_show_activity logo_show_activity;
+    com.example.logopuzzle.Activity.logo_show_activity logo_show_activity;
     String level;
     ArrayList<String> imagearr;
     public gride_adapter(logo_show_activity logo_show_activity, String level, ArrayList<String> imagearr) {
