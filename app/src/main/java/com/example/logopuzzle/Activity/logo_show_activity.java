@@ -4,8 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 
 import com.example.logopuzzle.R;
 import com.example.logopuzzle.Adapter.gride_adapter;
@@ -18,6 +24,9 @@ public class logo_show_activity extends AppCompatActivity {
     String level;
     ArrayList<String> imagearr=new ArrayList();
     RecyclerView gridView;
+    Toolbar toolbar;
+    TextView textView;
+    Button back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +34,19 @@ public class logo_show_activity extends AppCompatActivity {
         gridView=findViewById(R.id.gride_view_logo);
         level=getIntent().getStringExtra("level");
         String image[];
+        toolbar=findViewById(R.id.tool_bar);
+        textView=findViewById(R.id.tool_text);
+        back=findViewById(R.id.back_button);
+     setSupportActionBar(toolbar);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(logo_show_activity.this, level_show_activity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         try {
             if (level.equals("Level 1"))
             {

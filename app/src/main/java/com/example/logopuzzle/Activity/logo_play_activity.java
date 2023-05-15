@@ -1,15 +1,21 @@
 package com.example.logopuzzle.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+
 
 import com.example.logopuzzle.R;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,9 +26,13 @@ import java.util.Random;
 public class logo_play_activity extends AppCompatActivity implements View.OnClickListener {
     ImageView imageView;
     String image,level;
-    Button hint,cancel,clear;
-    Button[] btn=new Button[14];
+    Button hint,cancel,clear,back;
+    TextView[] btn=new TextView[14];
     LinearLayout layout;
+    Toolbar toolbar;
+    TextView textView;
+
+
 
     ArrayList<Character>ansarr=new ArrayList<>();
     @Override
@@ -33,6 +43,20 @@ public class logo_play_activity extends AppCompatActivity implements View.OnClic
         imageView=findViewById(R.id.play_image_view);
         level=getIntent().getStringExtra("level");
         layout=findViewById(R.id.liner_layout);
+        toolbar=findViewById(R.id.tool_bar);
+        textView=findViewById(R.id.tool_text);
+        back=findViewById(R.id.back_button);
+        setSupportActionBar(toolbar);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(logo_play_activity.this, logo_show_activity.class);
+                intent.putExtra("level",level);
+                startActivity(intent);
+                finish();
+            }
+        });
         for (int i=0;i<btn.length;i++)
         {
             int id = getResources().getIdentifier("btn"+i,"id",getPackageName());
@@ -75,10 +99,13 @@ public class logo_play_activity extends AppCompatActivity implements View.OnClic
         }
         for (int i=ch.length;i<btn.length;i++)
         {
-            char c= (char) (new Random().nextInt(122-'a')+97);
+            char c= (char) (new Random().nextInt(122-97)+97);
+            System.out.println("c="+c);
             ansarr.add(c);
         }
         System.out.println("before="+ansarr);
+        Collections.shuffle(ansarr);
+        System.out.println("after="+ansarr);
         Collections.shuffle(ansarr);
         System.out.println("after="+ansarr);
         for (int i=0;i<btn.length;i++)

@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activity.logo_play_activity">
+    <include layout="@layout/toolbar"></include>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_weight=".9">
+        android:layout_weight=".8">
         <ImageView
             android:layout_width="@dimen/_150sdp"
             android:layout_height="@dimen/_150sdp"
@@ -22,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/liner_layout"
-        android:layout_weight="1.1">
+        android:orientation="vertical"
+        android:layout_weight="1">
 
     </LinearLayout>
 
@@ -31,15 +33,17 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_weight="1.2">
+        android:layout_weight="1">
         <Button
             android:layout_width="@dimen/_150sdp"
             android:layout_height="@dimen/_35sdp"
             android:text="Hint"
             android:textSize="@dimen/_15sdp"
+
+           app:backgroundTint="@null"
             android:background="@drawable/hint"
             android:id="@+id/hint_button"
-            app:backgroundTint="@null"></Button>
+            ></Button>
         <Button
             android:layout_width="@dimen/_35sdp"
             android:layout_height="@dimen/_35sdp"
@@ -66,131 +70,178 @@
             android:orientation="horizontal"
             android:layout_marginHorizontal="@dimen/_7sdp"
             android:layout_weight=".9">
-            <Button
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#817E7E"
+                android:background="#817E7E"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
+
                 android:id="@+id/btn0"
                 android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#817E7E"
+                android:background="#817E7E"
                 android:id="@+id/btn1"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#817E7E"
+                android:background="#817E7E"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
                 android:id="@+id/btn2"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#817E7E"
+                android:background="#817E7E"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
                 android:id="@+id/btn3"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/btn4"
-                android:backgroundTint="#817E7E"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
+                android:background="#817E7E"
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/btn5"
-                android:backgroundTint="#817E7E"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
+                android:background="#817E7E"
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
                 android:id="@+id/btn6"
-                android:backgroundTint="#817E7E"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
+                android:background="#817E7E"
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight=".9"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginHorizontal="@dimen/_7sdp">
-            <Button
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/btn7"
-                android:backgroundTint="#817E7E"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
+                android:background="#817E7E"
                 android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/btn8"
-                android:backgroundTint="#817E7E"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
+                android:background="#817E7E"
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/btn9"
-                android:backgroundTint="#817E7E"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
+                android:background="#817E7E"
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/btn10"
-                android:backgroundTint="#817E7E"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
+                android:background="#817E7E"
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/btn11"
-                android:backgroundTint="#817E7E"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
+                android:background="#817E7E"
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#817E7E"
+                android:background="#817E7E"
                 android:id="@+id/btn12"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
-            <Button
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/btn13"
-                android:backgroundTint="#817E7E"
-                android:layout_marginLeft="@dimen/_1sdp"
-                ></Button>
+                android:background="#817E7E"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_2sdp"
+                ></TextView>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
-            android:layout_weight=".5"></LinearLayout>
+            android:layout_weight=".7"></LinearLayout>
 
     </LinearLayout>
 
