@@ -63,7 +63,8 @@ public class gride_adapter extends RecyclerView.Adapter<gride_adapter.user_holde
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(logo_show_activity, logo_play_activity.class);
-                intent.putExtra("image",imagearr.get(holder.getAdapterPosition()));
+                intent.putExtra("position",holder.getAdapterPosition());
+                intent.putExtra("image",imagearr);
                 intent.putExtra("level",level);
                 logo_show_activity.startActivity(intent);
             }
