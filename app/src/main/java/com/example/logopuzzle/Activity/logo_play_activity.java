@@ -67,19 +67,6 @@ public class logo_play_activity extends AppCompatActivity implements View.OnClic
                 finish();
             }
         });
-//        for (int i=0;i<btn.length;i++)
-//        {
-//            int id = getResources().getIdentifier("btn"+i,"id",getPackageName());
-//            btn[i]=findViewById(id);
-//            btn[i].setOnClickListener(this);
-//        }
-//        hint=findViewById(R.id.hint_button);
-//        clear=findViewById(R.id.clear_all_button);
-//        cancel=findViewById(R.id.cancle_button);
-//        cancel.setOnClickListener(this);
-//        clear.setOnClickListener(this);
-//
-//        hint.setOnClickListener(this);
 
 
 

@@ -25,9 +25,11 @@ public class ViewPagerAdapter  extends PagerAdapter implements View.OnClickListe
     Context context;
     ArrayList<String> image;
     String level;
-    Button ans_button[];
-    private ArrayList<Character> ansarr=new ArrayList<>();
+    
+     ArrayList<Character> ansarr=new ArrayList<>();
     private TextView[] btn=new TextView[14];
+    String str[];
+    char ch;
 
     public ViewPagerAdapter(Context context, ArrayList<String> image, String level) {
         this.context=context;
@@ -79,59 +81,58 @@ public class ViewPagerAdapter  extends PagerAdapter implements View.OnClickListe
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        System.out.println("co"+context.getApplicationContext());
         Drawable drawable= Drawable.createFromStream(stream,null);
         imageView.setImageDrawable(drawable);
+
+
 
         inflateItem(position,linearLayout);
         container.addView(view);
         return view;
     }
 
+    private void inflateItem(int position, LinearLayout linearLayout)
+    {
+        String str[] = image.get(position).split("\\.");
+        char ch[]=str[0].toCharArray();
+        //System.out.println("string="+str[0]);
 
-        private void inflateItem(int position, LinearLayout linearLayout)
+        for (int i=0;i<ch.length;i++)
         {
-
-
-            String str[]=image.get(position).split("\\.");
-            char ch[]=str[0].toCharArray();
-            for (int i=0;i<ch.length;i++)
-            {
-                ansarr.add(ch[i]);
-
-            }
-            for (int i=ch.length;i<btn.length;i++)
-            {
-                char c= (char) (new Random().nextInt(122-97)+97);
-                System.out.println("c="+c);
-                ansarr.add(c);
-            }
-            System.out.println("before="+ansarr);
-            Collections.shuffle(ansarr);
-            System.out.println("after="+ansarr);
-            Collections.shuffle(ansarr);
-            System.out.println("after="+ansarr);
-            for (int i=0;i<btn.length;i++)
-            {
-                btn[i].setText(""+ansarr.get(i).toString());
-                System.out.println(""+ansarr.get(i));
-
-            }
-            Button ans_button[] = new Button[str[0].length()];
-
-            for (int i = 0; i < str[0].length(); i++) {
-                ans_button[i] = new Button(context.getApplicationContext());
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-                layoutParams.setMargins(5, 5, 5, 5);
-                ans_button[i].setLayoutParams(layoutParams);
-                ans_button[i].setBackgroundColor(context.getResources().getColor(R.color.purple_200));
-                linearLayout.addView(ans_button[i]);
-            }
+            ansarr.add(ch[i]);
+          //  System.out.println("chhhhh====="+ch[i]);
 
         }
+        for (int i=ch.length;i<btn.length;i++)
+        {
+            char c= (char) (new Random().nextInt(122-97)+97);
+            //  System.out.println("c="+c);
+            ansarr.add(c);
+        }
+        //  System.out.println("before="+ansarr);
+         Collections.shuffle(ansarr);
+        // System.out.println("after="+ansarr);
+         Collections.shuffle(ansarr);
+        //  System.out.println("after="+ansarr);
+        for (int i=0;i<btn.length;i++)
+        {
+            btn[i].setText(""+ansarr.get(i));
+              System.out.println("c"+ansarr.get(i));
 
+        }
+        ansarr.clear();
+        Button ans_button[] = new Button[str[0].length()];
 
-
+        for (int i = 0; i < str[0].length(); i++) {
+            ans_button[i] = new Button(context.getApplicationContext());
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            layoutParams.setMargins(5, 5, 5, 5);
+            ans_button[i].setLayoutParams(layoutParams);
+            ans_button[i].setBackgroundColor(context.getResources().getColor(R.color.purple_200));
+            linearLayout.addView(ans_button[i]);
+        }
+    }
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
 
@@ -140,6 +141,7 @@ public class ViewPagerAdapter  extends PagerAdapter implements View.OnClickListe
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
+
     }
 
     @Override
