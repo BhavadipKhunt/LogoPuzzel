@@ -2,7 +2,9 @@ package com.example.logopuzzle.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -24,36 +26,37 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class logo_play_activity extends AppCompatActivity implements View.OnClickListener {
-    ImageView imageView;
+public class logo_play_activity extends AppCompatActivity  {
+
     ArrayList<String> image;
     String level;
-    Button hint,cancel,clear,back;
-    TextView[] btn=new TextView[14];
-    LinearLayout layout;
+    Button back;
+
     Toolbar toolbar;
     TextView textView;
-    ViewPager viewPager;
+    ViewPager2 viewPager;
     int position;
-   ArrayList<Character>ansarr=new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo_play);
         position=getIntent().getIntExtra("position",0);
         image=getIntent().getStringArrayListExtra("image");
-        imageView=findViewById(R.id.play_image_view);
+
         level=getIntent().getStringExtra("level");
-        layout=findViewById(R.id.liner_layout);
+
         toolbar=findViewById(R.id.tool_bar);
         textView=findViewById(R.id.tool_text);
         back=findViewById(R.id.back_button);
         viewPager=findViewById(R.id.viewPager);
 
-        ViewPagerAdapter pagerAdapter=new ViewPagerAdapter(logo_play_activity.this,image,level);
+        ViewPagerAdapter pagerAdapter=new ViewPagerAdapter(logo_play_activity.this,image,level,viewPager,position);
+        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(position);
-        //inflateItem(position);
+       viewPager.setCurrentItem(position);
+
+
 
         setSupportActionBar(toolbar);
 
@@ -72,43 +75,5 @@ public class logo_play_activity extends AppCompatActivity implements View.OnClic
 
     }
 
-    private void inflateItem(int position)
-    {
 
-        String str[]=image.get(position).split("\\.");
-        char ch[]=str[0].toCharArray();
-        for (int i=0;i<ch.length;i++)
-        {
-            ansarr.add(ch[i]);
-
-        }
-        for (int i=ch.length;i<btn.length;i++)
-        {
-            char c= (char) (new Random().nextInt(122-97)+97);
-            System.out.println("c="+c);
-            ansarr.add(c);
-        }
-        System.out.println("before="+ansarr);
-        Collections.shuffle(ansarr);
-        System.out.println("after="+ansarr);
-        Collections.shuffle(ansarr);
-        System.out.println("after="+ansarr);
-        for (int i=0;i<btn.length;i++)
-        {
-            btn[i].setText(""+ansarr.get(i).toString());
-            System.out.println(""+ansarr.get(i));
-
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        for (int i=0;i<btn.length;i++)
-        {
-            if (view.getId()==btn[i].getId())
-            {
-
-            }
-        }
-    }
 }

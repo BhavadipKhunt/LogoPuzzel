@@ -11,7 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.logopuzzle.R;
 
@@ -21,48 +22,77 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class ViewPagerAdapter  extends PagerAdapter implements View.OnClickListener {
+public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.UserHolder> {
     Context context;
     ArrayList<String> image;
     String level;
-    
-     ArrayList<Character> ansarr=new ArrayList<>();
-    private TextView[] btn=new TextView[14];
-    String str[];
-    char ch;
+    Button ans_button[];
+    int position;
+    ArrayList<Character> ansarr=new ArrayList<>();
 
-    public ViewPagerAdapter(Context context, ArrayList<String> image, String level) {
+    String str[];
+    char ch[];
+    int t=0;
+    ViewPager2 viewPager;
+
+    public ViewPagerAdapter(Context context, ArrayList<String> image, String level, ViewPager2 viewPager, int position) {
         this.context=context;
         this.image=image;
         this.level=level;
+        this.viewPager=viewPager;
+        this.position=position;
     }
-
-    @Override
-    public int getCount() {
-        return image.size();
-    }
-
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-       // return super.instantiateItem(container, position);
-        View view = LayoutInflater.from(context).inflate(R.layout.view_pager_item, container, false);
-        ImageView imageView = view.findViewById(R.id.play_image_view);
-        LinearLayout linearLayout=view.findViewById(R.id.liner_layout);
-        for (int i=0;i<btn.length;i++)
-        {
-            int id = context.getResources().getIdentifier("btn"+i,"id",context.getPackageName());
-            btn[i]=view.findViewById(id);
-            btn[i].setOnClickListener(this);
-        }
-//        hint=findViewById(R.id.hint_button);
-//        clear=findViewById(R.id.clear_all_button);
-//        cancel=findViewById(R.id.cancle_button);
-//        cancel.setOnClickListener(this);
-//        clear.setOnClickListener(this);
-//
-//        hint.setOnClickListener(this);
+    public ViewPagerAdapter.UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.view_pager_item, parent, false);
+        UserHolder userHolder=new UserHolder(view);
+        t=0;
+        inflateItem(userHolder,position);
+        return userHolder;
+    }
 
+    @Override
+    public void onBindViewHolder(@NonNull ViewPagerAdapter.UserHolder holder, int position)
+    {
+        inflateItem(holder,position);
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+            @Override
+            public void onPageSelected(int pos) {
+                super.onPageSelected(pos);
+                t=0;
+//                inflateItem(holder,pos);
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+            }
+        });
+    }
+    @Override
+    public int getItemCount() {
+        return image.size();
+    }
+    public class UserHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
+        LinearLayout linearLayout;
+        TextView[] btn=new TextView[14];
+        public UserHolder(@NonNull View itemView) {
+            super(itemView);
+            imageView=itemView.findViewById(R.id.play_image_view);
+            linearLayout=itemView.findViewById(R.id.liner_layout);
+            for (int i=0;i<btn.length;i++)
+            {
+                int id = context.getResources().getIdentifier("btn" + i, "id", context.getPackageName());
+                btn[i] = itemView.findViewById(id);
+            }
+        }
+    }
+    private void inflateItem(UserHolder holder, int position) {
         InputStream stream=null;
         try {
 
@@ -83,69 +113,53 @@ public class ViewPagerAdapter  extends PagerAdapter implements View.OnClickListe
         }
         System.out.println("co"+context.getApplicationContext());
         Drawable drawable= Drawable.createFromStream(stream,null);
-        imageView.setImageDrawable(drawable);
+        holder.imageView.setImageDrawable(drawable);
 
-
-
-        inflateItem(position,linearLayout);
-        container.addView(view);
-        return view;
-    }
-
-    private void inflateItem(int position, LinearLayout linearLayout)
-    {
-        String str[] = image.get(position).split("\\.");
-        char ch[]=str[0].toCharArray();
-        //System.out.println("string="+str[0]);
-
+        str = image.get(position).split("\\.");
+        ch = str[0].toCharArray();
         for (int i=0;i<ch.length;i++)
         {
             ansarr.add(ch[i]);
-          //  System.out.println("chhhhh====="+ch[i]);
-
         }
-        for (int i=ch.length;i<btn.length;i++)
+        for (int i=ch.length;i<holder.btn.length;i++)
         {
             char c= (char) (new Random().nextInt(122-97)+97);
-            //  System.out.println("c="+c);
             ansarr.add(c);
         }
-        //  System.out.println("before="+ansarr);
-         Collections.shuffle(ansarr);
-        // System.out.println("after="+ansarr);
-         Collections.shuffle(ansarr);
-        //  System.out.println("after="+ansarr);
-        for (int i=0;i<btn.length;i++)
+        Collections.shuffle(ansarr);
+        Collections.shuffle(ansarr);
+        for (int i=0;i<holder.btn.length;i++)
         {
-            btn[i].setText(""+ansarr.get(i));
-              System.out.println("c"+ansarr.get(i));
+            holder.btn[i].setText(""+ansarr.get(i));
+            System.out.println("c"+ansarr.get(i));
 
         }
         ansarr.clear();
-        Button ans_button[] = new Button[str[0].length()];
-
-        for (int i = 0; i < str[0].length(); i++) {
+        holder.linearLayout.removeAllViews();
+        ans_button = new Button[str[0].length()];
+        for (int i = 0; i < ch.length; i++) {
             ans_button[i] = new Button(context.getApplicationContext());
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
             layoutParams.setMargins(5, 5, 5, 5);
             ans_button[i].setLayoutParams(layoutParams);
             ans_button[i].setBackgroundColor(context.getResources().getColor(R.color.purple_200));
-            linearLayout.addView(ans_button[i]);
+            holder.linearLayout.addView(ans_button[i]);
         }
-    }
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-
-        return (view==object);
-    }
-    @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View) object);
-
-    }
-
-    @Override
-    public void onClick(View view) {
-
+        for (int i = 0; i < holder.btn.length; i++) {
+            holder.btn[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for (int i = 0; i < holder.btn.length; i++) {
+                        if (view.getId() == holder.btn[i].getId()) {
+                            if (t < ch.length) {
+                                ans_button[t].setText("" + holder.btn[i].getText());
+                                t++;
+                                holder.btn[i].setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }
+                }
+            });
+        }
     }
 }
