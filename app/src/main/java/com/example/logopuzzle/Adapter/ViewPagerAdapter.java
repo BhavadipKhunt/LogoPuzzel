@@ -35,8 +35,9 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
     char ch[];
     int t=0;
     ViewPager2 viewPager;
-    private int cnt=0;
-    private int counter=0;
+    private int cnt=1;
+    private int counter=1;
+    private int counter1=1;
 
     public ViewPagerAdapter(Context context, ArrayList<String> image, String level, ViewPager2 viewPager, int position) {
         this.context=context;
@@ -44,33 +45,48 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
         this.level=level;
         this.viewPager=viewPager;
         this.position=position;
+        //viewPager.setCurrentItem(position,false);
     }
     @NonNull
     @Override
     public ViewPagerAdapter.UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_pager_item, parent, false);
         UserHolder userHolder=new UserHolder(view);
-        //Log.d("SSS", "onCreateViewHolder: Called="+(cnt++)+"/tPosition="+position);
+        System.out.println("posi=="+position);
+        if (counter==1) {
+            t = 0;
+            inflateItem(userHolder, position);
+        }
+            System.out.println("onCreateViewHolder called="+(counter++));
 
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-
-            @Override
-            public void onPageSelected(int pos) {
-                super.onPageSelected(pos);
-                t=0;
-                Log.d("SSS", "onCreateViewHolder: Called="+(cnt++)+"/tPosition="+pos);
-                inflateItem(userHolder,pos);
-
-            }
-
-        });
         return userHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewPagerAdapter.UserHolder holder, int position)
     {
-        //Log.d("SSS", "onBindViewHolder: Called="+(counter++));
+        System.out.println("onBindViewHolder called="+(counter1++));
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                t=0;
+                inflateItem(holder,position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+            }
+        });
+
+
+
     }
     @Override
     public int getItemCount() {
@@ -92,6 +108,7 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
         }
     }
     private void inflateItem(UserHolder holder, int position) {
+        System.out.println("Fun calls=> "+(cnt++)+"\t Position of Page="+position);
         InputStream stream=null;
         try {
 
@@ -131,7 +148,7 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
         for (int i=0;i<holder.btn.length;i++)
         {
             holder.btn[i].setText(""+ansarr.get(i));
-            System.out.println("c"+ansarr.get(i));
+            //System.out.println("c"+ansarr.get(i));
 
         }
         ansarr.clear();

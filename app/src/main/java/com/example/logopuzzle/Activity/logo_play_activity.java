@@ -52,9 +52,10 @@ public class logo_play_activity extends AppCompatActivity  {
         viewPager=findViewById(R.id.viewPager);
 
         ViewPagerAdapter pagerAdapter=new ViewPagerAdapter(logo_play_activity.this,image,level,viewPager,position);
-        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        //viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         viewPager.setAdapter(pagerAdapter);
-       viewPager.setCurrentItem(position);
+        viewPager.setCurrentItem(position,false);
+
 
 
 
