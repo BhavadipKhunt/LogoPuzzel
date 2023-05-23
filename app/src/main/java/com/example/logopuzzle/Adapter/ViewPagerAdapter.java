@@ -30,7 +30,7 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
     ArrayList<String> image;
     String level;
     Button ans_button[];
-    int position;
+    int fristpos;
     ArrayList<Character> ansarr=new ArrayList<>();
     ArrayList<Integer> remove =new ArrayList();
     static StringBuffer ans=new StringBuffer();
@@ -47,7 +47,7 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
         this.image=image;
         this.level=level;
         this.viewPager=viewPager;
-        this.position=position;
+        this.fristpos=position;
         //viewPager.setCurrentItem(position,false);
     }
     @NonNull
@@ -55,44 +55,23 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
     public ViewPagerAdapter.UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_pager_item, parent, false);
         UserHolder userHolder=new UserHolder(view);
-        System.out.println("posi=="+position);
-        if (counter==1) {
-            t = 0;
-            userHolder.linearLayout.removeAllViews();
-            ans.delete(0,t);
-            inflateItem(userHolder, position);
-        }
-            System.out.println("onCreateViewHolder called="+(counter++));
 
+        inflateItem(userHolder,fristpos);
+            viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(int position) {
+                    super.onPageSelected(position);
+                    t=0;
+                    Log.d("1222", "onPageSelected: pos"+position);
+                    inflateItem(userHolder,position);
+                }
+            });
         return userHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewPagerAdapter.UserHolder holder, int position)
     {
-        System.out.println("onBindViewHolder called="+(counter1++));
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                t=0;
-                ans.delete(0,t);
-                holder.linearLayout.removeAllViews();
-                inflateItem(holder,position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-            }
-        });
-
-
 
     }
     @Override
@@ -138,105 +117,108 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("co"+context.getApplicationContext());
         Drawable drawable= Drawable.createFromStream(stream,null);
         holder.imageView.setImageDrawable(drawable);
 
         str = image.get(position).split("\\.");
         ch = str[0].toCharArray();
-        String finalans=str[0];
+
         Log.d("SSS", "Image Loaded=: "+str[0]);
-        for (int i=0;i<ch.length;i++)
+        for (int i=0;i<str[0].length();i++)
         {
             ansarr.add(ch[i]);
+            Log.d("1111", "inflateItem: ch"+ch[i]);
         }
-        for (int i=ch.length;i<holder.btn.length;i++)
+        for (int i=str[0].length();i<holder.btn.length;i++)
         {
             char c= (char) (new Random().nextInt(122-97)+97);
             ansarr.add(c);
+            Log.d("1111", "inflateItem: c="+ c);
         }
-        Collections.shuffle(ansarr);
-        Collections.shuffle(ansarr);
+//        Collections.shuffle(ansarr);
+//        Collections.shuffle(ansarr);
         for (int i=0;i<holder.btn.length;i++)
         {
+            Log.d("1111", "inflateItem: ansaaa="+ansarr.get(i));
             holder.btn[i].setText(""+ansarr.get(i));
             //System.out.println("c"+ansarr.get(i));
 
         }
-
+        t=0;
+        holder.linearLayout.removeAllViews();
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+        layoutParams.setMargins(5, 5, 5, 5);
         int finalpos=position;
         ans_button = new Button[str[0].length()];
-        for (int i = 0; i < ch.length; i++) {
-            ans_button[i] = new Button(context.getApplicationContext());
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            layoutParams.setMargins(5, 5, 5, 5);
+        for (int i = 0; i < str[0].length(); i++) {
+            ans_button[i] = new Button(context);
+
             ans_button[i].setLayoutParams(layoutParams);
             ans_button[i].setBackgroundColor(context.getResources().getColor(R.color.purple_200));
             holder.linearLayout.addView(ans_button[i]);
-            ansarr.clear();
-        }
 
+        }
+        String finalans=str[0];
+        Log.d("1111", "inflateItem: image name="+str[0]);
         for (int i = 0; i < holder.btn.length; i++) {
             holder.btn[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    for (int i = 0; i < holder.btn.length; i++) {
-                        if (view.getId() == holder.btn[i].getId()) {
-                            if (t < ch.length) {
-                                ans_button[t].setText("" + holder.btn[i].getText());
-                                remove.add(i);
-                                ans.append(holder.btn[i].getText());
+                    for (int j = 0; j < holder.btn.length; j++) {
+                        if (view.getId() == holder.btn[j].getId()) {
+                            if (t < ans_button.length) {
+                                ans_button[t].setText("" + holder.btn[j].getText().toString());
+
+                                ans.append(holder.btn[j].getText().toString());
+
+                                holder.btn[j].setVisibility(View.INVISIBLE);
+                                CheckWin(ans,finalans,finalpos);
                                 t++;
-                                holder.btn[i].setVisibility(View.INVISIBLE);
-                                CheckWin(ans);
                             }
                         }
                     }
                 }
 
-                private void CheckWin(StringBuffer ans) {
-                    if (finalans.equalsIgnoreCase(String.valueOf(ans)))
-                    {
 
-                        ans.delete(0,finalans.length());
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("Good");
-                        builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                holder.linearLayout.removeAllViews();
-                                viewPager.setCurrentItem(finalpos+1);
-                            }
-                        });
-                        builder.show();
-                    }
-                    else
-                    {
-                        viewPager.setCurrentItem(finalpos);
-
-                    }
-                }
             });
 
         }
-        holder.delet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+//        holder.delet.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                for (int i=0;i<finalans.length();i++)
+//                {
+//                    holder.btn[remove.get(i)].setVisibility(View.VISIBLE);
+//                    if (ans_button[i].getText()!="") {
+//                        holder.btn[remove.get(i)].setText(ans_button[i].getText());
+//                        ans_button[i].setText("");
+//
+//                    }
+//                }
+//                viewPager.setCurrentItem(finalpos);
+//                remove.clear();
+//            }
+//        });
 
-                for (int i=0;i<finalans.length();i++)
-                {
-                    holder.btn[remove.get(i)].setVisibility(View.VISIBLE);
-                    if (ans_button[i].getText()!="") {
-                        holder.btn[remove.get(i)].setText(ans_button[i].getText());
-                        ans_button[i].setText("");
+    }
+    private void CheckWin(StringBuffer ans, String finalans, int finalpos) {
+        if (finalans.equalsIgnoreCase(String.valueOf(ans)))
+        {
 
-                    }
+            ans.delete(0,finalans.length());
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Good");
+            builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    int k=finalpos+1;
+                    viewPager.setCurrentItem(k);
                 }
-                viewPager.setCurrentItem(finalpos);
-                remove.clear();
-            }
-        });
+            });
+            builder.show();
+        }
 
     }
 }
