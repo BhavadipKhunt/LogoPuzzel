@@ -29,14 +29,14 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
     Context context;
     ArrayList<String> image;
     String level;
-    Button ans_button[];
-    int position;
-    ArrayList<Character> ansarr=new ArrayList<>();
+
+    int fristposition;
+
     ArrayList<Integer> remove =new ArrayList();
     static StringBuffer ans=new StringBuffer();
     String str[];
-    char ch[];
-    int t=0;
+
+    int t;
     ViewPager2 viewPager;
     private int cnt=1;
 
@@ -46,7 +46,7 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
         this.image=image;
         this.level=level;
         this.viewPager=viewPager;
-        this.position=position;
+        this.fristposition=position;
         //viewPager.setCurrentItem(position,false);
     }
     @NonNull
@@ -56,15 +56,14 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
         UserHolder userHolder=new UserHolder(view);
 
 
-        inflateItem(position,userHolder);
-        Log.d("SSS111", "creat=: "+position);
+        inflateItem(fristposition,userHolder);
+
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int pos) {
-                super.onPageSelected(pos);
+             super.onPageSelected(pos);
                 t=0;
-                Log.d("SSS111", "pagechange=: "+pos);
                 inflateItem(pos,userHolder);
             }
         });
@@ -75,26 +74,27 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
     @Override
     public void onBindViewHolder(@NonNull ViewPagerAdapter.UserHolder holder, int position)
     {
+
         inflateItem(position,holder);
-        Log.d("SSS111", "bind=: "+position);
+//        Log.d("SSS111", "bind=: "+position);
    }
     private void inflateItem( int position,UserHolder holder) {
         System.out.println("Fun calls=> "+(cnt++)+"\t Position of Page="+position);
-
+        String name=image.get(position);
         InputStream stream=null;
         try {
 
             if (level.equals("Level 1")) {
-                stream=context.getAssets().open("level 1UN/"+image.get(position));
+                stream=context.getAssets().open("level 1UN/"+name);
             }
             if (level.equals("Level 2")) {
-                stream=context.getAssets().open("level 2UN/"+image.get(position));
+                stream=context.getAssets().open("level 2UN/"+name);
             }
             if (level.equals("Level 3")) {
-                stream=context.getAssets().open("level 3UN/"+image.get(position));
+                stream=context.getAssets().open("level 3UN/"+name);
             }
             if (level.equals("Level 4")) {
-                stream=context.getAssets().open("level 4UN/"+image.get(position));
+                stream=context.getAssets().open("level 4UN/"+name);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -103,10 +103,11 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
         Drawable drawable= Drawable.createFromStream(stream,null);
         holder.imageView.setImageDrawable(drawable);
 
-        str = image.get(position).split("\\.");
-        ch = str[0].toCharArray();
+        str = name.split("\\.");
+        char ch[] = str[0].toCharArray();
         String finalans=str[0];
-      Log.d("SSS111", "Image Loaded=: "+str[0]);
+        ArrayList<Character> ansarr=new ArrayList<>();
+      Log.d("SSS111", "Image Loaded=: "+name);
         for (int i=0;i<ch.length;i++)
         {
             ansarr.add(ch[i]);
@@ -116,8 +117,8 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
             char c= (char) (new Random().nextInt(122-97)+97);
             ansarr.add(c);
         }
-        Collections.shuffle(ansarr);
-        Collections.shuffle(ansarr);
+//        Collections.shuffle(ansarr);
+//        Collections.shuffle(ansarr);
         for (int i=0;i<holder.btn.length;i++)
         {
             holder.btn[i].setText(""+ansarr.get(i));
@@ -125,7 +126,7 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
 
         }
 
-        ans_button = new Button[str[0].length()];
+        Button ans_button[] = new Button[str[0].length()];
         t=0;
         holder.linearLayout.removeAllViews();
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
@@ -148,17 +149,17 @@ public class ViewPagerAdapter  extends RecyclerView.Adapter<ViewPagerAdapter.Use
                 @Override
                 public void onClick(View view) {
                     for (int j = 0; j < holder.btn.length; j++) {
+                        if (t < ans_button.length) {
                         if (view.getId() == holder.btn[j].getId()) {
-                            if (t < ans_button.length) {
+
                                 ans_button[t].setText("" + holder.btn[j].getText().toString());
                                 remove.add(j);
                                 ans.append(holder.btn[j].getText().toString());
-                                t++;
+
                                 holder.btn[j].setVisibility(View.INVISIBLE);
-                                CheckWin(ans,finalans,finalpos);
-                                Log.d("SSS1", "Image Loaded=: "+finalans);
-                                Log.d("SSS1", "Image Loaded=: "+finalpos);
-                                Log.d("SSS1", "Image Loaded=: "+ans);
+                                t++;
+                                CheckWin(ans,str[0],finalpos);
+
                             }
                         }
                     }
